@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telemedicine Kiosk</title>
+</head>
+<body>
+    <h1>Welcome to Telemedicine Kiosk</h1>
+    
+    <form id="authForm">
+        <label for="aadhaar">Enter Aadhaar Number:</label>
+        <input type="text" id="aadhaar" name="aadhaar" required>
+        <button type="submit">Authenticate</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('authForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const aadhaarNumber = document.getElementById('aadhaar').value;
+
+            const response = await fetch('/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ aadhaarNumber }),
+            });
+
+            const data = await response.json();
+            document.getElementById('result').innerText = data.message;
+        });
+    </script>
+</body>
+</html>
